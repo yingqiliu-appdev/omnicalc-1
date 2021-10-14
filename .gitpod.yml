@@ -1,4 +1,4 @@
-image: jelaniwoods/appdev2021-omnicalc-1@sha256:5b8554e2163e932972e9592de1364103853e56ae56c59e06160a3e4ffd7166d7
+image: jelaniwoods/appdev2021-omnicalc-1@sha256:073a23dc65a0c65fd4e414a5d73a507445fa9b4e6c6fa9d562f9cf03e8646f90
 
 tasks:
   - command: bundle install
@@ -10,5 +10,4 @@ ports:
 vscode:
   extensions:
     - shd101wyy.markdown-preview-enhanced
-    - Vense.rails-snippets
     - wingrunr21.vscode-ruby
