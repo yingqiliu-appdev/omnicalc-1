@@ -39,11 +39,17 @@ class ApplicationController < ActionController::Base
     @years_float = params.fetch("years").to_f
     @principal_float = params.fetch("principal").to_f
 
-    @interest = @int_float.round(6).to_s( :percentage)
+
+    @monthly_int = @int_float/100/12
+    @interest = @int_float.to_s(:percentage, { :precision => 4 }) 
     @years = @years_float.to_i
-    @principal = @principal_float.to_s( :currency)
+    @months = @years*12
+    @principal = @principal_float.to_s(:currency)
    
-    @payment = (@principal_float*(@int_float/12)*((1+@int_float/12)**(@years_float*12))/(((1+@int_float/12)**(@years_float*12))-1)).to_f.to_s( :currency)
+    @numerator = @principal_float*@monthly_int*(1+@monthly_int)**@months.to_f
+    @denominator = ((1+@monthly_int)**@months - 1).to_f
+
+    @payment = (@numerator/@denominator).to_s(:currency)
 
     render({ :template => "calculation_templates/payment_results.html.erb"})
     
