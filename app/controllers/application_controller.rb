@@ -35,9 +35,15 @@ class ApplicationController < ActionController::Base
 
   def calculate_payment
 
-    @interest = params.fetch("apr").to_f.round(4).to_s( :percentage)
-    @years = params.fetch("years").to_i
-    @principal = params.fetch("principal").to_f.to_s( :currency)
+    @int_float = params.fetch("apr").to_f
+    @years_float = params.fetch("years").to_f
+    @principal_float = params.fetch("principal").to_f
+
+    @interest = @int_float.round(6).to_s( :percentage)
+    @years = @years_float.to_i
+    @principal = @principal_float.to_s( :currency)
+   
+    @payment = (@principal_float*(@int_float/12)*((1+@int_float/12)**(@years_float*12))/(((1+@int_float/12)**(@years_float*12))-1)).to_f.to_s( :currency)
 
     render({ :template => "calculation_templates/payment_results.html.erb"})
     
@@ -49,7 +55,6 @@ class ApplicationController < ActionController::Base
     
   end
 
-
   def calculate_random
 
     @lower = params.fetch("user_min").to_f
@@ -58,8 +63,5 @@ class ApplicationController < ActionController::Base
     render({ :template => "calculation_templates/rand_results.html.erb"})
     
   end
-
-
-
 
 end
