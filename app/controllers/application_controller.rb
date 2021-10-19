@@ -27,8 +27,27 @@ class ApplicationController < ActionController::Base
     
   end
 
+  def blank_payment_form
 
+    render({ :template => "calculation_templates/payment_form.html.erb"})
+    
+  end  
 
+  def calculate_payment
+
+    @interest = params.fetch("apr").to_f.round(4).to_s( :percentage)
+    @years = params.fetch("years").to_i
+    @principal = params.fetch("principal").to_f.to_s( :currency)
+
+    render({ :template => "calculation_templates/payment_results.html.erb"})
+    
+  end
+
+  def blank_random_form
+
+    render({ :template => "calculation_templates/random_form.html.erb"})
+    
+  end
 
 
   def calculate_random
